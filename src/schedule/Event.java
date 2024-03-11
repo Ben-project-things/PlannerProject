@@ -8,15 +8,15 @@ import java.util.List;
  * what day it starts and ends, the start and end time, and the users hosting and that are involved.
  */
 public class Event {
-  private final String name;
-  private final String location;
-  private final boolean isOnline;
-  private final Days startDay;
-  private final int startTime;
-  private final Days endDay;
-  private final int endTime;
-  private final User host;
-  private final List<User> invitees;
+  private String name;
+  private String location;
+  private boolean isOnline;
+  private Days startDay;
+  private int startTime;
+  private Days endDay;
+  private int endTime;
+  private User host;
+  private List<User> invitees;
 
 
 
