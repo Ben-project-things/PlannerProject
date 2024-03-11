@@ -1,7 +1,7 @@
 package schedule;
 
 /**
- * Represents functionality of
+ * Represents the functionality of a schedule.
  */
 public interface ScheduleModel {
 
@@ -10,7 +10,7 @@ public interface ScheduleModel {
    * @param e represents the event to add to this schedule
    * @throws IllegalArgumentException if the event does not exist or there are overlapping times
    */
-  public void addEvent(Event e) throws IllegalArgumentException;
+  void addEvent(Event e) throws IllegalArgumentException;
 
   /**
    * Allows the modification of a given event of this schedule by the host, updating the event for
@@ -18,13 +18,13 @@ public interface ScheduleModel {
    * @param e represents the event to modify to this schedule
    * @throws IllegalArgumentException if the user is not the host or the event doesn't exist
    */
-  public void modifyEvent(Event e) throws IllegalArgumentException;
+  void modifyEvent(Event e) throws IllegalArgumentException;
 
   /**
    *
    * @param e represents the event to remove to this schedule
    * @throws IllegalArgumentException if the event doesn't exist or isn't in this schedule
    */
-  public void removeEvent(Event e) throws IllegalArgumentException;
+  void removeEvent(Event e) throws IllegalArgumentException;
 
 }

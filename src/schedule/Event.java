@@ -1,6 +1,5 @@
 package schedule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,8 +16,6 @@ public class Event {
   private int endTime;
   private User host;
   private List<User> invitees;
-
-
 
   //TODO: builder method for events
   public Event() {

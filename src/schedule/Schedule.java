@@ -8,11 +8,12 @@ import java.util.List;
  * as well as modification of events.
  */
 public class Schedule implements ScheduleModel {
-  private List<Event> scheduleList;
+  private final List<Event> scheduleList;
 
   public Schedule() {
     this.scheduleList = new ArrayList<>();
   }
+
   @Override
   public void addEvent(Event e) throws IllegalArgumentException {
 
