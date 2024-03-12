@@ -2,6 +2,7 @@ package schedule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Implementation of a schedule allowing for the addition, and removal of events from this schedule
@@ -15,17 +16,32 @@ public class Schedule implements ScheduleModel {
   }
 
   @Override
-  public void addEvent(Event e) throws IllegalArgumentException {
-
+  public void addEvent(Event e) {
+    if (!this.scheduleList.contains(Objects.requireNonNull(e))) {
+      this.scheduleList.add(e);
+    }
+    else {
+      throw new IllegalArgumentException("Event is already on the schedule.");
+    }
   }
 
   @Override
-  public void modifyEvent(Event e) throws IllegalArgumentException {
-
+  public void modifyEvent(Event e) {
+    if (this.scheduleList.contains(Objects.requireNonNull(e))) {
+      //TODO: implement modification of events
+    }
+    else {
+      throw new IllegalArgumentException("Cannot modify an event the user is not in.");
+    }
   }
 
   @Override
-  public void removeEvent(Event e) throws IllegalArgumentException {
-
+  public void removeEvent(Event e) {
+    if (this.scheduleList.contains(Objects.requireNonNull(e))) {
+      this.scheduleList.remove(e);
+    }
+    else {
+      throw new IllegalArgumentException("Event is not present in the schedule.");
+    }
   }
 }
