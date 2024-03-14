@@ -12,6 +12,7 @@ public class User {
 
   /**
    * Constructor of a basic user to identify them by their name and an empty schedule.
+   *
    * @param name is the name of the user
    */
   public User(String name) {
@@ -21,6 +22,7 @@ public class User {
 
   /**
    * Constructor of a user with an existing schedule.
+   *
    * @param name is the name of the user
    */
   public User(String name, Schedule schedule) {
@@ -30,6 +32,7 @@ public class User {
 
   /**
    * Observation of a user's name.
+   *
    * @return the user's name
    */
   public String getName() {
@@ -38,6 +41,7 @@ public class User {
 
   /**
    * Observation of a user's schedule.
+   *
    * @return the user's schedule
    */
   public Schedule getSchedule() {

@@ -17,13 +17,14 @@ public class PlannerTextualView {
   public PlannerTextualView(User user) {
     this.user = user;
   }
+
   @Override
   public String toString() {
     StringBuilder out = new StringBuilder();
     out.append("User:").append(user.getName()).append("\n");
-    for (Days d: Days.values()) {
+    for (Days d : Days.values()) {
       out.append(d).append(":\n");
-      for (Event e: user.getSchedule().getEventsInSchedule()) {
+      for (Event e : user.getSchedule().getEventsInSchedule()) {
         if (e.occursOnStartDay(d)) {
           out.append("\tname: ").append(e.getName()).append("\n");
           out.append("\ttime: ").append(e.getStartDay()).append(": ").append(e.getStartTime())

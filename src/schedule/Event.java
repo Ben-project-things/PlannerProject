@@ -211,6 +211,7 @@ public class Event {
   /**
    * Method which checks if two events are overlapping, meaning does one event start or occur
    * during the duration of the other.
+   *
    * @param e is the event to check with
    * @return true if there are any overlaps
    */
@@ -223,13 +224,13 @@ public class Event {
       //Case to check on wrap around
       potentialDayOverlap = !(this.endDay.ordinal() < e.startDay.ordinal() &&
               this.startDay.ordinal() > e.endDay.ordinal());
-    }
-    else {
+    } else {
       //Case to check standard format
       potentialDayOverlap = this.startDay.ordinal() <= e.endDay.ordinal() &&
               this.endDay.ordinal() >= e.startDay.ordinal();
     }
 
+    //Check for specific time overlap
     if (potentialDayOverlap) {
       boolean startsOnSameDay = this.startDay.equals(e.startDay);
       boolean endsOnSameDay = this.endDay.equals(e.endDay);
@@ -238,8 +239,7 @@ public class Event {
               (e.startTime >= this.startTime && e.startTime <= this.endTime))) {
         return true;
       }
-
-      if (endsOnSameDay && ((this.endTime >= e.startTime && this.endTime <= e.endTime) ||
+      else if (endsOnSameDay && ((this.endTime >= e.startTime && this.endTime <= e.endTime) ||
               (e.endTime >= this.startTime && e.endTime <= this.endTime))) {
         return true;
       }
@@ -247,9 +247,42 @@ public class Event {
     return false;
   }
 
+  /**
+   * Public helper method to check whether this event is during the given day and time.
+   *
+   * @param d is the day to check
+   * @param time is the time to check
+   * @return true if this event elapses over the given day and time
+   */
+  public boolean checkDuringTime(Days d, int time) {
+    boolean isDuringDay = (d.ordinal() >= this.startDay.ordinal() &&
+            d.ordinal() <= this.endDay.ordinal());
+    //If wrap around event, recalculate isDuringDay
+    if (this.endDay.ordinal() < this.startDay.ordinal()) {
+      isDuringDay = d.ordinal() <= this.endDay.ordinal() || d.ordinal() >= this.startDay.ordinal();
+    }
+    //If it doesn't fall between, can't be during given time and day
+    if (!isDuringDay) {
+      return false;
+    }
+    //Check time directly for single day events
+    if (this.startDay == this.endDay) {
+      return (time >= this.startTime && time <= this.endTime);
+    }
+    //Check time for startTime
+    else if (d == this.startDay) {
+      //Time must be greater than startTime to be within boundary
+      return time >= this.startTime;
+    } else if (d == this.endDay) {
+      //Time must be less than endTime to be within boundary
+      return time <= this.endTime;
+    }
+    return true;
+  }
+
 
   /**
-   * Public used to check if the day requested is the start day.
+   * Public method used to check if the day requested is the start day.
    *
    * @param day is the start day to check
    * @return if the start day metches this day
