@@ -33,7 +33,7 @@ public class Schedule implements ScheduleModel {
    */
   private boolean noTimeDiscrepancy(Event e) {
     //TODO: checks for if this is a valid event to add (overlapping times)
-    return false;
+    return true;
   }
 
   @Override
