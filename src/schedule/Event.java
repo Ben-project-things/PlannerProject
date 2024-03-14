@@ -8,7 +8,7 @@ import java.util.Objects;
  * A representation of an event which includes the name and location of an event, if its online,
  * what day it starts and ends, the start and end time, and the users hosting and that are involved.
  * INVARIANT:
- *  0 <= startTime <= 2359 && 0 <= endTime <= 2359
+ * 0 <= startTime <= 2359 && 0 <= endTime <= 2359
  */
 public class Event {
   private String name;
@@ -38,6 +38,7 @@ public class Event {
 
   /**
    * Setter method to set the name of this event.
+   *
    * @param name is the name to call the event
    */
   public void setName(String name) {
@@ -46,6 +47,7 @@ public class Event {
 
   /**
    * Setter method to set the location of this event.
+   *
    * @param location is the location of the event
    */
   public void setLocation(String location) {
@@ -54,6 +56,7 @@ public class Event {
 
   /**
    * Setter method to set whether this event is online or not.
+   *
    * @param isOnline is whether this event is online
    */
   public void setIsOnline(boolean isOnline) {
@@ -62,6 +65,7 @@ public class Event {
 
   /**
    * Setter method to set when this event starts.
+   *
    * @param startDay is the day the event will start on.
    */
   public void setStartDay(Days startDay) {
@@ -70,19 +74,20 @@ public class Event {
 
   /**
    * Setter method to set start time of the event. Throws an exception if time given is invalid.
+   *
    * @param startTime is the start time this event will be
    */
   public void setStartTime(int startTime) {
     if (endTime >= 0 && endTime <= 2359) {
       this.startTime = startTime;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Time must be between 00:00 and 23:59");
     }
   }
 
   /**
    * Setter method to set when this event ends.
+   *
    * @param endDay is the day the event will end on.
    */
   public void setEndDay(Days endDay) {
@@ -91,19 +96,20 @@ public class Event {
 
   /**
    * Setter method to set end time of the event. Throws an exception if time given is invalid.
+   *
    * @param endTime is the end time this event will be
    */
   public void setEndTime(int endTime) {
     if (endTime >= 0 && endTime <= 2359) {
       this.endTime = endTime;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Time must be between 00:00 and 23:59");
     }
   }
 
   /**
    * Setter method to set the host of this event.
+   *
    * @param host is the host user of this event
    */
   public void setHost(User host) {
@@ -112,6 +118,7 @@ public class Event {
 
   /**
    * Setter method to set the invitees to this event, adds the host to the list of invitees.
+   *
    * @param invitees is the list of users invited to this event
    */
   public void setInvitees(List<User> invitees) {
@@ -122,6 +129,7 @@ public class Event {
 
   /**
    * Observation of the name of the event.
+   *
    * @return the name of the event
    */
   public String getName() {
@@ -130,6 +138,7 @@ public class Event {
 
   /**
    * Observation of the start day of the event.
+   *
    * @return the start day of the event
    */
   public Days getStartDay() {
@@ -138,6 +147,7 @@ public class Event {
 
   /**
    * Observation of the start time of the event.
+   *
    * @return the start time of the event
    */
   public int getStartTime() {
@@ -146,6 +156,7 @@ public class Event {
 
   /**
    * Observation of the end day of the event.
+   *
    * @return the end day of the event
    */
   public Days getEndDay() {
@@ -154,6 +165,7 @@ public class Event {
 
   /**
    * Observation of the end time of the event.
+   *
    * @return the end time of the event
    */
   public int getEndTime() {
@@ -162,6 +174,7 @@ public class Event {
 
   /**
    * Observation of the location of the event.
+   *
    * @return the location of the event
    */
   public String getLocation() {
@@ -170,6 +183,7 @@ public class Event {
 
   /**
    * Observation if the event is online.
+   *
    * @return if the event is online
    */
   public boolean getIsOnline() {
@@ -178,6 +192,7 @@ public class Event {
 
   /**
    * Observation of the host of the event.
+   *
    * @return the host of the event
    */
   public User getHost() {
@@ -186,18 +201,56 @@ public class Event {
 
   /**
    * Observation of the invitees of the event.
+   *
    * @return the invitees of the event
    */
   public List<User> getInvitees() {
     return this.invitees;
   }
 
+  /**
+   * Method which checks if two events are overlapping, meaning does one event start or occur
+   * during the duration of the other.
+   * @param e is the event to check with
+   * @return true if there are any overlaps
+   */
+  public boolean checkOverlap(Event e) {
+    boolean thisSpansWeekBoundary = this.startDay.ordinal() > this.endDay.ordinal();
+    boolean otherEventSpansWeekBoundary = e.startDay.ordinal() > e.endDay.ordinal();
+    boolean potentialDayOverlap;
 
+    if (thisSpansWeekBoundary || otherEventSpansWeekBoundary) {
+      //Case to check on wrap around
+      potentialDayOverlap = !(this.endDay.ordinal() < e.startDay.ordinal() &&
+              this.startDay.ordinal() > e.endDay.ordinal());
+    }
+    else {
+      //Case to check standard format
+      potentialDayOverlap = this.startDay.ordinal() <= e.endDay.ordinal() &&
+              this.endDay.ordinal() >= e.startDay.ordinal();
+    }
 
+    if (potentialDayOverlap) {
+      boolean startsOnSameDay = this.startDay.equals(e.startDay);
+      boolean endsOnSameDay = this.endDay.equals(e.endDay);
+
+      if (startsOnSameDay && ((this.startTime >= e.startTime && this.startTime <= e.endTime) ||
+              (e.startTime >= this.startTime && e.startTime <= this.endTime))) {
+        return true;
+      }
+
+      if (endsOnSameDay && ((this.endTime >= e.startTime && this.endTime <= e.endTime) ||
+              (e.endTime >= this.startTime && e.endTime <= this.endTime))) {
+        return true;
+      }
+    }
+    return false;
+  }
 
 
   /**
    * Public used to check if the day requested is the start day.
+   *
    * @param day is the start day to check
    * @return if the start day metches this day
    */
@@ -227,6 +280,7 @@ public class Event {
 
     /**
      * Builder method to set the name of this event.
+     *
      * @param name is the name of the event
      * @return the builder to continue constructing the event object
      */
@@ -237,6 +291,7 @@ public class Event {
 
     /**
      * Builder method to set the location of this event.
+     *
      * @param location is the location of the event
      * @return the builder to continue constructing the event object
      */
@@ -247,6 +302,7 @@ public class Event {
 
     /**
      * Builder method to set whether the event is online.
+     *
      * @param isOnline is if the event is online
      * @return the builder to continue constructing the event object
      */
@@ -257,6 +313,7 @@ public class Event {
 
     /**
      * Builder method to set the start day of this event.
+     *
      * @param startDay is the start day of the event
      * @return the builder to continue constructing the event object
      */
@@ -267,6 +324,7 @@ public class Event {
 
     /**
      * Builder method to set the start time of this event.
+     *
      * @param startTime is the start time of the event
      * @return the builder to continue constructing the event object
      */
@@ -277,6 +335,7 @@ public class Event {
 
     /**
      * Builder method to set the end day of this event.
+     *
      * @param endDay is the end day of the event
      * @return the builder to continue constructing the event object
      */
@@ -287,6 +346,7 @@ public class Event {
 
     /**
      * Builder method to set the end time of this event.
+     *
      * @param endTime is the end time of the event
      * @return the builder to continue constructing the event object
      */
@@ -297,6 +357,7 @@ public class Event {
 
     /**
      * Builder method to set the host of this event.
+     *
      * @param host is the host of the event
      * @return the builder to continue constructing the event object
      */
@@ -307,6 +368,7 @@ public class Event {
 
     /**
      * Builder method to set the invitees of this event.
+     *
      * @param invitees is the invitees of the event
      * @return the builder to continue constructing the event object
      */
@@ -317,6 +379,7 @@ public class Event {
 
     /**
      * Build method to construct and return the new event.
+     *
      * @return the constructed event
      */
     public Event build() {

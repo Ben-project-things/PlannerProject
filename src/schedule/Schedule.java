@@ -32,7 +32,11 @@ public class Schedule implements ScheduleModel {
    * @return true if there is no time discrepancy and the event can be added
    */
   private boolean noTimeDiscrepancy(Event e) {
-    //TODO: checks for if this is a valid event to add (overlapping times)
+    for (Event eventInSchedule : scheduleList) {
+      if (eventInSchedule.checkOverlap(e)) {
+        return false;
+      }
+    }
     return true;
   }
 
