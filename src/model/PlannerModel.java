@@ -5,9 +5,15 @@ package model;
  */
 public interface PlannerModel {
 
-  //TODO: functionality with XML files
+  //TODO: find out what parameters and return values are
+  /**
+   * Uploads a given XML file to the planner database.
+   */
   void uploadSchedule();
 
+  /**
+   * Saves the current schedule of the user as an XML file.
+   */
   void saveSchedule();
 
 }

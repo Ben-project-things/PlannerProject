@@ -111,18 +111,105 @@ public class Event {
   }
 
   /**
-   * Setter method to set the invitees to this event.
+   * Setter method to set the invitees to this event, adds the host to the list of invitees.
    * @param invitees is the list of users invited to this event
    */
   public void setInvitees(List<User> invitees) {
-    this.invitees = invitees;
+    List<User> hostIncludedInvitees = new ArrayList<>(invitees);
+    hostIncludedInvitees.add(0, this.getHost());
+    this.invitees = hostIncludedInvitees;
+  }
+
+  /**
+   * Observation of the name of the event.
+   * @return the name of the event
+   */
+  public String getName() {
+    return this.name;
+  }
+
+  /**
+   * Observation of the start day of the event.
+   * @return the start day of the event
+   */
+  public Days getStartDay() {
+    return this.startDay;
+  }
+
+  /**
+   * Observation of the start time of the event.
+   * @return the start time of the event
+   */
+  public int getStartTime() {
+    return this.startTime;
+  }
+
+  /**
+   * Observation of the end day of the event.
+   * @return the end day of the event
+   */
+  public Days getEndDay() {
+    return this.endDay;
+  }
+
+  /**
+   * Observation of the end time of the event.
+   * @return the end time of the event
+   */
+  public int getEndTime() {
+    return this.endTime;
+  }
+
+  /**
+   * Observation of the location of the event.
+   * @return the location of the event
+   */
+  public String getLocation() {
+    return this.location;
+  }
+
+  /**
+   * Observation if the event is online.
+   * @return if the event is online
+   */
+  public boolean getIsOnline() {
+    return this.isOnline;
+  }
+
+  /**
+   * Observation of the host of the event.
+   * @return the host of the event
+   */
+  public User getHost() {
+    return this.host;
+  }
+
+  /**
+   * Observation of the invitees of the event.
+   * @return the invitees of the event
+   */
+  public List<User> getInvitees() {
+    return this.invitees;
+  }
+
+
+
+
+
+  /**
+   * Public used to check if the day requested is the start day.
+   * @param day is the start day to check
+   * @return if the start day metches this day
+   */
+  public boolean occursOnStartDay(Days day) {
+    return this.startDay.equals(day);
   }
 
   /**
    * Builder to construct events.
    */
   public static class Builder {
-    private Event event;
+    private final Event event;
 
     /**
      * Constructor to initialize the event.

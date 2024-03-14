@@ -17,12 +17,23 @@ public class Schedule implements ScheduleModel {
 
   @Override
   public void addEvent(Event e) {
-    if (!this.scheduleList.contains(Objects.requireNonNull(e))) {
+    if (!this.scheduleList.contains(Objects.requireNonNull(e)) && this.noTimeDiscrepancy(e)) {
       this.scheduleList.add(e);
     }
     else {
       throw new IllegalArgumentException("Event is already on the schedule.");
     }
+  }
+
+  /**
+   * Helper method to check whether any events currently in this schedule collide with the given
+   * event.
+   * @param e is the event to check
+   * @return true if there is no time discrepancy and the event can be added
+   */
+  private boolean noTimeDiscrepancy(Event e) {
+    //TODO: checks for if this is a valid event to add (overlapping times)
+    return false;
   }
 
   @Override
@@ -43,5 +54,13 @@ public class Schedule implements ScheduleModel {
     else {
       throw new IllegalArgumentException("Event is not present in the schedule.");
     }
+  }
+
+  /**
+   * Observation of a schedules events.
+   * @return the events in this schedule
+   */
+  public List<Event> getEventsInSchedule() {
+    return this.scheduleList;
   }
 }
