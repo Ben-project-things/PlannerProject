@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.util.List;
 
 import schedule.Days;
 import schedule.Event;
@@ -10,9 +11,6 @@ import schedule.User;
  * Represents the functions that the overall Planner system is able to perform.
  */
 public interface PlannerModel {
-
-  //TODO: find out what parameters and return values are
-
   /**
    * Method to convert from an XML file to the User object used for the planner system, adding that
    * user to the database.
@@ -75,9 +73,15 @@ public interface PlannerModel {
    * @param user is the user's schedule to check
    * @param day  is the day to check
    * @param time is the time to check
-   * @return the event if there is one during that day or time, null if there is no event during
-   * that time
+   * @return the event if there is one during that day or time, null if not
    */
   Event eventAtTime(User user, Days day, int time);
+
+  /**
+   * Observation to see all the users contained in this planner system.
+   *
+   * @return the users in this planner system
+   */
+  List<User> getAllUsers();
 
 }

@@ -10,7 +10,7 @@ import schedule.Event;
 import schedule.User;
 
 /**
- * A class that represents tests for the methods in PlannerTextualView
+ * A class that represents tests for the methods in PlannerTextualView.
  */
 public class ScheduleTextualViewTests {
 

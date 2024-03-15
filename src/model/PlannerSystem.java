@@ -31,7 +31,7 @@ public class PlannerSystem implements PlannerModel {
    * Constructor to use a specific user list that has already been created.
    */
   public PlannerSystem(List<User> userList) {
-    this.userList = userList;
+    this.userList = new ArrayList<>(userList);
     Set<Event> uniqueEvents = new HashSet<>();
     for (User user : userList) {
       List<Event> userEvents = user.getSchedule().getEventsInSchedule();
@@ -43,8 +43,8 @@ public class PlannerSystem implements PlannerModel {
 
   @Override
   public void uploadSchedule(File file) throws Exception {
-    User XMLtoUSER = XMLUtil.parseUserFromXML(file);
-    this.userList.add(XMLtoUSER);
+    User xmlToUser = XMLUtil.parseUserFromXML(file);
+    this.userList.add(xmlToUser);
   }
 
   @Override
@@ -55,7 +55,7 @@ public class PlannerSystem implements PlannerModel {
   @Override
   public void displayUser(User user) {
     if (this.userList.contains(user)) {
-      //Since no controller yet, use of view here
+      //Since no controller yet, use of view here (would be GUI implementation to display)
       PlannerTextualView view = new PlannerTextualView(user);
       System.out.println(view);
     } else {
@@ -109,5 +109,10 @@ public class PlannerSystem implements PlannerModel {
       throw new IllegalArgumentException("User does not exist.");
     }
     return null;
+  }
+
+  @Override
+  public List<User> getAllUsers() {
+    return new ArrayList<>(this.userList);
   }
 }

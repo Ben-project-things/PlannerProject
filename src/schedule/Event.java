@@ -8,7 +8,8 @@ import java.util.Objects;
  * A representation of an event which includes the name and location of an event, if its online,
  * what day it starts and ends, the start and end time, and the users hosting and that are involved.
  * INVARIANT:
- * 0 <= startTime <= 2359 && 0 <= endTime <= 2359
+ * First two digits of start and end time are >= 0 and < 24.
+ * Last two digits of start and end time are >= 0 and < 60
  */
 public class Event {
   private String name;
@@ -78,7 +79,7 @@ public class Event {
    * @param startTime is the start time this event will be
    */
   public void setStartTime(int startTime) {
-    if (endTime >= 0 && endTime <= 2359) {
+    if (isValidTime(startTime)) {
       this.startTime = startTime;
     } else {
       throw new IllegalArgumentException("Time must be between 00:00 and 23:59");
@@ -100,7 +101,7 @@ public class Event {
    * @param endTime is the end time this event will be
    */
   public void setEndTime(int endTime) {
-    if (endTime >= 0 && endTime <= 2359) {
+    if (isValidTime(endTime)) {
       this.endTime = endTime;
     } else {
       throw new IllegalArgumentException("Time must be between 00:00 and 23:59");
@@ -235,11 +236,11 @@ public class Event {
       boolean startsOnSameDay = this.startDay.equals(e.startDay);
       boolean endsOnSameDay = this.endDay.equals(e.endDay);
 
-      if (startsOnSameDay && ((this.startTime >= e.startTime && this.startTime <= e.endTime) ||
-              (e.startTime >= this.startTime && e.startTime <= this.endTime))) {
+      if (startsOnSameDay && ((this.startTime > e.startTime && this.startTime < e.endTime) ||
+              (e.startTime > this.startTime && e.startTime < this.endTime))) {
         return true;
-      } else if (endsOnSameDay && ((this.endTime >= e.startTime && this.endTime <= e.endTime) ||
-              (e.endTime >= this.startTime && e.endTime <= this.endTime))) {
+      } else if (endsOnSameDay && ((this.endTime > e.startTime && this.endTime < e.endTime) ||
+              (e.endTime > this.startTime && e.endTime < this.endTime))) {
         return true;
       }
     }
@@ -279,7 +280,6 @@ public class Event {
     return true;
   }
 
-
   /**
    * Public method used to check if the day requested is the start day.
    *
@@ -288,6 +288,19 @@ public class Event {
    */
   public boolean occursOnStartDay(Days day) {
     return this.startDay.equals(day);
+  }
+
+  /**
+   * Private helper used to check validity of start and end times.
+   *
+   * @param time is the time inputted
+   * @return true if the time is valid
+   */
+  private boolean isValidTime(int time) {
+    int hours = time / 100;
+    int minutes = time % 100;
+
+    return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;
   }
 
   /**
@@ -421,8 +434,12 @@ public class Event {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Event)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Event)) {
+      return false;
+    }
     Event event = (Event) o;
     return isOnline == event.isOnline &&
             startTime == event.startTime &&

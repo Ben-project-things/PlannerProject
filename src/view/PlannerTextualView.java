@@ -5,7 +5,7 @@ import schedule.Event;
 import schedule.User;
 
 /**
- * Represents a textual view of a Schedule
+ * Represents a textual view of a Schedule.
  */
 public class PlannerTextualView {
 

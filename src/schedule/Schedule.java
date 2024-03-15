@@ -33,7 +33,8 @@ public class Schedule implements ScheduleModel {
     if (!this.eventList.contains(Objects.requireNonNull(e)) && this.noTimeDiscrepancy(e)) {
       this.eventList.add(e);
     } else {
-      throw new IllegalArgumentException("Event is already on the schedule.");
+      throw new IllegalArgumentException("Event is already on the schedule or there is a time" +
+              "discrepancy.");
     }
   }
 
@@ -56,6 +57,7 @@ public class Schedule implements ScheduleModel {
   @Override
   public void modifyEvent(Event e) {
     if (this.eventList.contains(Objects.requireNonNull(e))) {
+      //Using a scanner for now to have basic logic, will change when GUI is used
       Scanner scanner = new Scanner(System.in);
       boolean keepModifying = true;
 
