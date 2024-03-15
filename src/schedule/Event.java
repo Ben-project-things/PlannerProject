@@ -419,4 +419,24 @@ public class Event {
       return event;
     }
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Event)) return false;
+    Event event = (Event) o;
+    return isOnline == event.isOnline &&
+            startTime == event.startTime &&
+            endTime == event.endTime &&
+            Objects.equals(name, event.name) &&
+            Objects.equals(location, event.location) &&
+            startDay == event.startDay &&
+            endDay == event.endDay &&
+            Objects.equals(host, event.host);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, location, isOnline, startDay, startTime, endDay, endTime, host);
+  }
 }

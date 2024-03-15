@@ -32,26 +32,29 @@ public interface PlannerModel {
    * Adds the given event to this schedule. Throws an IllegalArgumentException if the event isn't
    * in this schedule.
    *
+   * @param user represents the user who you add the event to
    * @param e represents the event to add to this schedule
    */
-  void addEvent(Event e);
+  void addEvent(User user, Event e);
 
   /**
    * Allows the modification of a given event of this schedule, updating the event for
    * the invitees. Throws an IllegalArgumentException if the event doesn't exist or isn't in
    * this schedule.
    *
+   * @param user represents the user who you want to modify from
    * @param e represents the event to modify to this schedule
    */
-  void modifyEvent(Event e);
+  void modifyEvent(User user, Event e);
 
   /**
    * Removes the given event from this schedule. Throws an IllegalArgumentException if the event
    * isn't in this schedule.
    *
+   * @param user represents the user who you want to remove the event from
    * @param e represents the event to remove to this schedule
    */
-  void removeEvent(Event e);
+  void removeEvent(User user, Event e);
 
   /**
    * Method to automatically schedule an event for a given user.

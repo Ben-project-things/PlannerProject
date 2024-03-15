@@ -12,5 +12,4 @@ public interface PlannerController {
    */
   void displayUser(User user);
 
-
 }
