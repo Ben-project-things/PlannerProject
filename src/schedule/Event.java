@@ -238,8 +238,7 @@ public class Event {
       if (startsOnSameDay && ((this.startTime >= e.startTime && this.startTime <= e.endTime) ||
               (e.startTime >= this.startTime && e.startTime <= this.endTime))) {
         return true;
-      }
-      else if (endsOnSameDay && ((this.endTime >= e.startTime && this.endTime <= e.endTime) ||
+      } else if (endsOnSameDay && ((this.endTime >= e.startTime && this.endTime <= e.endTime) ||
               (e.endTime >= this.startTime && e.endTime <= this.endTime))) {
         return true;
       }
@@ -250,7 +249,7 @@ public class Event {
   /**
    * Public helper method to check whether this event is during the given day and time.
    *
-   * @param d is the day to check
+   * @param d    is the day to check
    * @param time is the time to check
    * @return true if this event elapses over the given day and time
    */

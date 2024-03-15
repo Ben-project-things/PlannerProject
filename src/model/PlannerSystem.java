@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -41,13 +42,14 @@ public class PlannerSystem implements PlannerModel {
 
 
   @Override
-  public void uploadSchedule() {
-    //TODO: functionality with converting XML files
+  public void uploadSchedule(File file) throws Exception {
+    User XMLtoUSER = XMLUtil.parseUserFromXML(file);
+    this.userList.add(XMLtoUSER);
   }
 
   @Override
-  public void saveSchedule() {
-    //TODO: functionality with saving as an XML file
+  public void saveSchedule(User user) {
+    XMLUtil.convertUserToXML(user);
   }
 
   @Override

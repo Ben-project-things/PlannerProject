@@ -1,5 +1,7 @@
 package model;
 
+import java.io.File;
+
 import schedule.Days;
 import schedule.Event;
 import schedule.User;
@@ -12,14 +14,18 @@ public interface PlannerModel {
   //TODO: find out what parameters and return values are
 
   /**
-   * Uploads a given XML file to the planner database.
+   * Method to convert from an XML file to the User object used for the planner system, adding that
+   * user to the database.
+   *
+   * @param file is the XML file to be converted
+   * @throws Exception if the file does not exist
    */
-  void uploadSchedule();
+  void uploadSchedule(File file) throws Exception;
 
   /**
    * Saves the current schedule of the user as an XML file.
    */
-  void saveSchedule();
+  void saveSchedule(User user);
 
   /**
    * Displays the current user to the client.
@@ -33,7 +39,7 @@ public interface PlannerModel {
    * in this schedule.
    *
    * @param user represents the user who you add the event to
-   * @param e represents the event to add to this schedule
+   * @param e    represents the event to add to this schedule
    */
   void addEvent(User user, Event e);
 
@@ -43,7 +49,7 @@ public interface PlannerModel {
    * this schedule.
    *
    * @param user represents the user who you want to modify from
-   * @param e represents the event to modify to this schedule
+   * @param e    represents the event to modify to this schedule
    */
   void modifyEvent(User user, Event e);
 
@@ -52,7 +58,7 @@ public interface PlannerModel {
    * isn't in this schedule.
    *
    * @param user represents the user who you want to remove the event from
-   * @param e represents the event to remove to this schedule
+   * @param e    represents the event to remove to this schedule
    */
   void removeEvent(User user, Event e);
 

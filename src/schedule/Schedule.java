@@ -12,8 +12,20 @@ import java.util.Scanner;
 public class Schedule implements ScheduleModel {
   private final List<Event> eventList;
 
+  /**
+   * Basic constructor to construct an empty schedule.
+   */
   public Schedule() {
     this.eventList = new ArrayList<>();
+  }
+
+  /**
+   * Constructor to construct a schedule with given events.
+   *
+   * @param eventList is the list of events to add
+   */
+  public Schedule(List<Event> eventList) {
+    this.eventList = eventList;
   }
 
   @Override

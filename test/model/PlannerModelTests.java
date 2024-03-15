@@ -5,4 +5,5 @@ package model;
  */
 public class PlannerModelTests {
   //TODO: tests for functionality in schedule package.
+
 }

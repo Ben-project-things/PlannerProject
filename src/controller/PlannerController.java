@@ -8,6 +8,7 @@ import schedule.User;
 public interface PlannerController {
   /**
    * Action to select and display a user to the view.
+   *
    * @param user is the user to display
    */
   void displayUser(User user);

@@ -41,6 +41,10 @@ view.PlannerView: Represents the eventually implementation of views for the Plan
     refresh:
         will cause the panel to update according to what model it has.
 
+Key components:
+The main nouns in this system are Users which represent a name and a schedule, an enum of the days
+of the week, and an event, which has the fields representing the different attributes of an event.
+
 Source Organization:
 In terms of design choices for this project, we split the implementation of the schedule separate
 from the overall planner system since schedules need to be able to perform certain functions on
