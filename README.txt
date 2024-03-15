@@ -1,4 +1,6 @@
 Overview:
+The goal of this codebase is to implement a system which allows a client to interact with a planner
+system. It is assumed that the user is familiar with what XML files are and how they are formatted.
 
 Quick start:
 To get started, the user would create a PlannerSystem with no inputs, or supply it an existing list
@@ -7,7 +9,7 @@ interact with the PlannerSystem.
 
 Key components:
 There are four main components:
-controller.PlannerController:  Which will be implemented when the controller is needed.
+controller.PlannerController: Which will be implemented when the controller is needed.
 
 model.PlannerModel: The model in which the PlannerSystem operates on.
     uploadSchedule:
@@ -41,7 +43,7 @@ view.PlannerView: Represents the eventually implementation of views for the Plan
     refresh:
         will cause the panel to update according to what model it has.
 
-Key components:
+Key sub-components:
 The main nouns in this system are Users which represent a name and a schedule, an enum of the days
 of the week, and an event, which has the fields representing the different attributes of an event.
 
