@@ -37,11 +37,10 @@ public class XMLUtil {
       Document doc = builder.parse(xmlFile);
       doc.getDocumentElement().normalize();
 
-      Element scheduleElement = doc.getDocumentElement();
-      String userName = scheduleElement.getAttribute("id");
+      String userName = doc.getDocumentElement().getAttribute("id");
       User user = new User(userName);
 
-      NodeList eventList = scheduleElement.getElementsByTagName("event");
+      NodeList eventList = doc.getDocumentElement().getElementsByTagName("event");
       for (int i = 0; i < eventList.getLength(); i++) {
         Node eventNode = eventList.item(i);
         if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -49,8 +48,10 @@ public class XMLUtil {
           Element timeElement = (Element) eventElement.getElementsByTagName("time").item(0);
 
           Event event = new Event.Builder().
-                  name(eventElement.getElementsByTagName("name").item(0).getTextContent()).
-                  location(eventElement.getElementsByTagName("place").item(0).getTextContent()).
+                  name(eventElement.getElementsByTagName(
+                          "name").item(0).getTextContent()).
+                  location(eventElement.getElementsByTagName(
+                          "place").item(0).getTextContent()).
                   isOnline(Boolean.parseBoolean(eventElement.getElementsByTagName(
                           "online").item(0).getTextContent())).
                   startDay(Days.valueOf(timeElement.getElementsByTagName(
