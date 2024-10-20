@@ -1,31 +1,29 @@
 package model;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import xml.XMLUtil;
 import schedule.Days;
 import schedule.Event;
 import schedule.User;
 import view.PlannerTextualView;
 
 /**
- * Implementation of the planner model.
+ * Implementation of a read only planner model.
  */
-public class PlannerSystem implements PlannerModel {
+public class ReadOnlyPlannerSystem implements ReadOnlyPlannerModel {
   private final List<User> userList;
 
   private final List<Event> eventList;
 
-  private User selectedUser;
+  private final User selectedUser;
 
   /**
-   * Default constructor for a planner system that has no users in the database.
+   * Default constructor for a read only planner system that has no users in the database.
    */
-  public PlannerSystem() {
+  public ReadOnlyPlannerSystem() {
     this.userList = new ArrayList<>();
     this.eventList = new ArrayList<>();
     this.selectedUser = null;
@@ -34,7 +32,7 @@ public class PlannerSystem implements PlannerModel {
   /**
    * Constructor to use a specific user list that has already been created.
    */
-  public PlannerSystem(List<User> userList) {
+  public ReadOnlyPlannerSystem(List<User> userList) {
     this.userList = new ArrayList<>(userList);
     Set<Event> uniqueEvents = new HashSet<>();
     for (User user : userList) {
@@ -45,63 +43,15 @@ public class PlannerSystem implements PlannerModel {
     this.selectedUser = userList.getFirst();
   }
 
-
-  @Override
-  public void uploadSchedule(File file) throws Exception {
-    User xmlToUser = XMLUtil.parseUserFromXML(file);
-    this.userList.add(xmlToUser);
-  }
-
-  @Override
-  public void saveSchedule(User user) {
-    XMLUtil.convertUserToXML(user);
-  }
-
   @Override
   public void displayUser(User user) {
     if (this.userList.contains(user)) {
+      //Since no controller yet, use of view here (would be GUI implementation to display)
       PlannerTextualView view = new PlannerTextualView(user);
       System.out.println(view);
     } else {
       throw new IllegalArgumentException("User does not exist.");
     }
-  }
-
-  @Override
-  public void addEvent(Event e) {
-    if (!eventList.contains(e)) {
-      eventList.add(e);
-    }
-    for (User u : this.userList) {
-      if (e.getInvitees().contains(u)) {
-        u.getSchedule().addEvent(e);
-      }
-    }
-  }
-
-  @Override
-  public void modifyEvent(User user, Event event, Event event2) {
-    user.getSchedule().modifyEvent(event, event2);
-  }
-
-  @Override
-  public void removeEvent(User user, Event e) {
-    if (e.getHost().equals(user)) {
-      for (User invitee : e.getInvitees()) {
-        if (!invitee.equals(user)) {
-          invitee.getSchedule().removeEvent(e);
-        }
-      }
-      user.getSchedule().removeEvent(e);
-    } else if (e.getInvitees().contains(user)) {
-      user.getSchedule().removeEvent(e);
-      e.getInvitees().remove(user);
-    }
-  }
-
-  @Override
-  public void autoSchedule(User user) {
-    //Implementation later as mentioned in section 4
   }
 
   @Override
@@ -140,11 +90,6 @@ public class PlannerSystem implements PlannerModel {
   @Override
   public User getSelectedUser() {
     return this.selectedUser;
-  }
-
-  @Override
-  public void setSelectedUser(User user) {
-    this.selectedUser = user;
   }
 
 }

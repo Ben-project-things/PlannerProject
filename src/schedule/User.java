@@ -8,7 +8,7 @@ import java.util.Objects;
 public class User {
 
   private final String name;
-  private final Schedule schedule;
+  private final ScheduleModel schedule;
 
   /**
    * Constructor of a basic user to identify them by their name and an empty schedule.
@@ -25,7 +25,7 @@ public class User {
    *
    * @param name is the name of the user
    */
-  public User(String name, Schedule schedule) {
+  public User(String name, ScheduleModel schedule) {
     this.name = name;
     this.schedule = Objects.requireNonNull(schedule);
   }
@@ -44,7 +44,12 @@ public class User {
    *
    * @return the user's schedule
    */
-  public Schedule getSchedule() {
+  public ScheduleModel getSchedule() {
     return this.schedule;
+  }
+
+  @Override
+  public String toString() {
+    return this.name;
   }
 }

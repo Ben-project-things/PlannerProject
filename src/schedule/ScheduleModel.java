@@ -1,5 +1,8 @@
 package schedule;
 
+
+import java.util.List;
+
 /**
  * Represents the functionality of a schedule.
  */
@@ -19,8 +22,9 @@ public interface ScheduleModel {
    * this schedule.
    *
    * @param e represents the event to modify to this schedule
+   * @param e2 represents the modified event
    */
-  void modifyEvent(Event e);
+  void modifyEvent(Event e, Event e2);
 
   /**
    * Removes the given event from this schedule. Throws an IllegalArgumentException if the event
@@ -29,5 +33,12 @@ public interface ScheduleModel {
    * @param e represents the event to remove to this schedule
    */
   void removeEvent(Event e);
+
+  /**
+   * Observation of a schedules events.
+   *
+   * @return the events in this schedule
+   */
+  List<Event> getEventsInSchedule();
 
 }

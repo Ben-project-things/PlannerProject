@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.List;
 
+import xml.XMLUtil;
 import schedule.Days;
 import schedule.Event;
 import schedule.User;
@@ -54,21 +55,21 @@ public class PlannerModelTests {
   @Test
   public void testAddEvent() {
     this.setUp();
-    plannerSystem.addEvent(user1, event1);
+    plannerSystem.addEvent(event1);
     assertEquals(1, user1.getSchedule().getEventsInSchedule().size());
-    plannerSystem.addEvent(user1, event2);
+    plannerSystem.addEvent(event2);
     Assert.assertThrows(IllegalArgumentException.class
-            , () -> plannerSystem.addEvent(user1, event1));
+            , () -> plannerSystem.addEvent(event1));
     Assert.assertThrows(IllegalArgumentException.class
-            , () -> plannerSystem.addEvent(user1, event3));
-    plannerSystem.addEvent(user1, event4);
+            , () -> plannerSystem.addEvent(event3));
+    plannerSystem.addEvent(event4);
     assertEquals(List.of(event1, event2, event4), user1.getSchedule().getEventsInSchedule());
   }
 
   @Test
   public void testRemoveEvent() {
     this.setUp();
-    plannerSystem.addEvent(user1, event1);
+    plannerSystem.addEvent(event1);
     plannerSystem.removeEvent(user1, event1);
     assertTrue(user1.getSchedule().getEventsInSchedule().isEmpty());
     Assert.assertThrows(IllegalArgumentException.class

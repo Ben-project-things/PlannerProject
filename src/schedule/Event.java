@@ -123,8 +123,13 @@ public class Event {
    * @param invitees is the list of users invited to this event
    */
   public void setInvitees(List<User> invitees) {
+    if (this.host == null) {
+      throw new IllegalStateException("Host must be set before setting invitees.");
+    }
     List<User> hostIncludedInvitees = new ArrayList<>(invitees);
-    hostIncludedInvitees.add(0, this.getHost());
+    if (!hostIncludedInvitees.contains(this.host)) {
+      hostIncludedInvitees.add(0, this.host);
+    }
     this.invitees = hostIncludedInvitees;
   }
 
@@ -454,5 +459,32 @@ public class Event {
   @Override
   public int hashCode() {
     return Objects.hash(name, location, isOnline, startDay, startTime, endDay, endTime, host);
+  }
+
+  @Override
+  public String toString() {
+    return this.name;
+  }
+
+  /**
+   * Public method which helps print out the details about a center event in an ordered way.
+   *
+   * @return the string containing the event details
+   */
+  public String printDetails() {
+    StringBuilder details = new StringBuilder();
+    details.append("Name: ").append(this.name).append("\n");
+    details.append("Location: ").append(this.location).append("\n");
+    details.append("Is Online: ").append(this.isOnline ? "true" : "false").append("\n");
+    details.append("Start Day: ").append(this.startDay).append("\n");
+    details.append("Start Time: ").append(this.startTime).append("\n");
+    details.append("End Day: ").append(this.endDay).append("\n");
+    details.append("End Time: ").append(this.endTime).append("\n");
+    details.append("Host: ").append(this.host).append("\n");
+    details.append("Invitees: ").append("\n");
+    for (User u : this.invitees) {
+      details.append(u.toString()).append("\n");
+    }
+    return details.toString();
   }
 }
